@@ -9,11 +9,13 @@ const BigContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: grey;
+    background: pink;
     width: 20%;
     border-radius: 8px;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 4px solid black;
 `;
 
 const PlaceYourOrder = styled.h1`
@@ -26,20 +28,23 @@ const PlaceYourOrder = styled.h1`
     padding: 1rem;
 `;
 
-const ReturnHome = styled.button`
+const BlackButton = styled.button`
 color: white;
 border: 2px solid black;
 border-radius: 8px;
 background: black;
-font-size: 1rem;
+font-size: 0.7rem;
 margin-top: 1rem;
 padding 0.5rem;
 margin-bottom: 1rem;
 `;
 
-export default function Form(props) {
+const FormStyling = styled.form`
+    display: flex;
+    flex-direction: column;
+`;
 
-    // Defining Validation Schema
+export default function Form(props) {
 
     let schema = yup.object().shape({
         name: yup.string().required('name must be at least 2 characters').min(2, 'name must be at least 2 characters'),
@@ -50,8 +55,6 @@ export default function Form(props) {
         topping4: yup.string(),
         special: yup.string()
     })
-
-    // Defining intial state of Form data and Errors
 
     const initialFormData = {
         name: '',
@@ -68,26 +71,20 @@ export default function Form(props) {
         size: ''
     }
 
-    // Declaring our slices of state
     const [formData, setFormData] = useState(initialFormData)
     const [errors, setErrors] = useState(defaultErrors)
     const [pizzas, setPizzas] = useState([])
     const [buttonDisable, setButtonDisable] = useState(true)
 
-    //Keep our submit button disabled until form validations pass. 
     useEffect(() => {
         schema.isValid(formData).then(valid => setButtonDisable(!valid))
     }, [formData])
 
-
-
-    // Function to navigate back to home page
     const history = useHistory()
     const routeToForm = () => {
         history.push('/')
     }
 
-    // Helper function to validate schema
     const setValidationErrors = (name, value) => {
         yup
             .reach(schema, name)
@@ -96,8 +93,6 @@ export default function Form(props) {
             .catch((err) => setErrors({ ...errors, [name]: err.errors[0] }));
     };
 
-    // Handle change function, determines wehter an input is of type checkbox or not.
-    // Updates and links our state to current changes being inputted, passes values into errors functions
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         const trueValue = type === 'checkbox' ? checked : value;
@@ -107,10 +102,6 @@ export default function Form(props) {
         })
     }
 
-    // Handle submit function, prevents page reload on submit
-    // Declares a new Pizza based on the current state of the data
-    // Passes that data to the API as a POST request
-    // Uses POST response to set the pizza state, clears form inputs
     const handleSubmit = (e) => {
         e.preventDefault()
         const newPizza = {
@@ -132,14 +123,16 @@ export default function Form(props) {
         <div>
             <BigContainer className="big-container">
             <PlaceYourOrder>Place your order!</PlaceYourOrder>
-            <form id='pizza-form' onSubmit={handleSubmit}>
+            <FormStyling id='pizza-form' onSubmit={handleSubmit}>
                 <label> Name:
                     <input type="text" name='name' id='name-input' onChange={handleChange} value={formData.name} />
                 </label>
+                <br></br>
                 <div style={{ color: "red" }}>
                     <div>
                         {errors.name}</div>
                 </div>
+                <br></br>
                 <label > Pizza Size:
                     <select id='size-dropdown' name='size' onChange={handleChange} value={formData.size} >
                         <option value="">-- Choose Size --</option>
@@ -149,10 +142,11 @@ export default function Form(props) {
                         <option value="Jumbo">Jumbo</option>
                     </select>
                 </label>
+                <br></br>
                 <div style={{ color: "red" }}>
                     <div>{errors.size}</div>
                 </div>
-
+                <br></br>
                 <label > Pepperoni
                     <input type="checkbox" name='topping1' onChange={handleChange} value={formData.topping1} />
                 </label>
@@ -173,10 +167,10 @@ export default function Form(props) {
                     <input id='special-text' type="text" name='special' onChange={handleChange} value={formData.special} />
                 </label>
                 <br></br>
-                <button name='submit' disabled={buttonDisable} id='order-button'> Complete Order</button>
-            </form>
+                <BlackButton name='submit' disabled={buttonDisable} id='order-button'> Complete Order</BlackButton>
+            </FormStyling>
             <Pizzas pizzas={pizzas} />
-            <ReturnHome onClick={routeToForm}>Return Home</ReturnHome>
+            <BlackButton onClick={routeToForm}>Return Home</BlackButton>
             </BigContainer>
         </div>
 

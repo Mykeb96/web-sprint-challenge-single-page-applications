@@ -36,13 +36,15 @@ const HeaderContainer = styled.div`
   display: flex;
   border: 0.3rem solid black;
   border-radius: 8px;
-  background: cyan;
+  background: pink;
   margin: 1rem;
 `;
 
 const PizzaContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const OrderPizzaButton = styled.button`
@@ -53,6 +55,13 @@ background: black;
 font-size: 1.7rem;
 margin-top: 1rem;
 padding 0.5rem;
+`;
+
+const PizzaImage = styled.img`
+  width: 60%;
+  height: 40%;
+  border: 4px solid black;
+  border-radius: 8px;
 `;
 
 
@@ -75,6 +84,7 @@ export default function Home() {
       </HeaderContainer>
 
       <PizzaContainer>
+        <PizzaImage src='https://hdwallsource.com/img/2014/7/pizza-20439-20951-hd-wallpapers.jpg' alt="pizza"/>
         <OrderPizzaButton id='order-pizza' onClick={routeToForm}>Order Pizza</OrderPizzaButton>
       </PizzaContainer>
       </div>

@@ -4,19 +4,19 @@ export default function Pizza(props) {
     const { name, size, special, topping1, topping2, topping3, topping4 } = props;
     const selectedToppings = [];
 
-    if (topping1 == true){
+    if (topping1 === true){
         selectedToppings.push('Pepperoni')
     }
 
-    if (topping2 == true){
+    if (topping2 === true){
         selectedToppings.push('Italian Sausage')
     }
 
-    if (topping3 == true){
+    if (topping3 === true){
         selectedToppings.push('bacon')
     }
 
-    if (topping4 == true){
+    if (topping4 === true){
         selectedToppings.push('Beef')
     }
 
