@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Route, Link } from 'react-router-dom';
 import Home from './Components/Home.js';
 import Form from './Components/Form.js';
+import { useRouteMatch } from 'react-router-dom'
 
 const NavBar = styled.nav`
 margin-left: 90rem;
@@ -35,6 +36,9 @@ const HeaderContainer = styled.div`
 `;
 
 const App = () => {
+
+  //const {path, url} = useRouteMatch();
+  console.log(useRouteMatch());
   return (
     <>
       <div>
